@@ -59,9 +59,12 @@ header[data-testid="stHeader"] {
     height: 3.5rem !important;
 }
 
-/* Hide Streamlit default header completely */
+/* Make Streamlit header transparent but visible for toolbar */
 header[data-testid="stHeader"] {
-    display: none !important;
+    background: transparent !important;
+    border: none !important;
+    height: auto !important;
+    padding: 0 !important;
 }
 
 /* Adjust main container for fixed header */
@@ -73,13 +76,16 @@ header[data-testid="stHeader"] {
 /* Position toolbar absolutely at top right, outside document flow */
 [data-testid="stToolbar"] {
     position: fixed !important;
-    top: 0.5rem !important;
-    right: 1rem !important;
+    top: 0.4rem !important;
+    right: 0.8rem !important;
     z-index: 999999 !important;
     pointer-events: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     background: transparent !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Custom Fixed Header */
