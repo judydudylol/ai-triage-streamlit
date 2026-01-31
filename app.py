@@ -53,9 +53,37 @@ st.set_page_config(
 st.markdown(
     """
 <style>
-/* Streamlit default container */
+/* Hide default header but keep toolbar accessible */
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    height: 3.5rem !important;
+}
+
+/* Adjust main container for fixed header */
 .block-container { 
+    padding-top: 4.5rem !important; 
     max-width: 1400px; 
+}
+
+/* Ensure Streamlit's top-right menu buttons stay visible above our header */
+[data-testid="stToolbar"] {
+    z-index: 1000001 !important;
+}
+
+/* Custom Fixed Header */
+.fixed-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+    padding: 0.4rem 1.2rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Decision Banners - COMPRESSED */
@@ -430,6 +458,28 @@ def get_mission_profile(category: str, severity: int) -> Dict[str, Any]:
 # =============================================================================
 # UI Components
 # =============================================================================
+
+def render_header():
+    st.markdown(
+        """
+<div class="fixed-toolbar">
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 1.1rem; font-weight: 700; color: white; letter-spacing: -0.5px;">SAHM</div>
+      <div style="height: 16px; width: 1px; background: rgba(255,255,255,0.2);"></div>
+      <div style="font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 400;">
+        Smart Aerial Human-Medic <span style="opacity: 0.5; margin: 0 4px;">|</span> Al Ghadir Dispatch Center
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 2px 8px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">LIVE SYSTEM</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: white;">سهم</div>
+    </div>
+  </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
 def render_rule_checklist(result: DispatchResult):
     """Visual rule evaluation"""
@@ -1377,6 +1427,8 @@ def render_data_explorer(data: Dict[str, Any]):
 # =============================================================================
 
 def main():
+    render_header()
+    
     data, error = load_all_data()
     if error:
         st.error(f"Data Loading Error: {error}")
