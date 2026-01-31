@@ -494,8 +494,6 @@ def render_header():
   <div class="header-brand">SAHM</div>
   <div class="header-divider"></div>
   <div class="header-title">Smart Aerial Human-Medic</div>
-</div>
-<div class="header-content" style="gap: 6px; white-space: nowrap;">
   <div class="header-badge">LIVE SYSTEM</div>
   <div class="header-arabic">سهم</div>
 </div>
