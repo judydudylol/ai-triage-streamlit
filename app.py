@@ -65,6 +65,7 @@ header[data-testid="stHeader"] {
     border: none !important;
     height: auto !important;
     padding: 0 !important;
+    z-index: 1 !important;
 }
 
 /* Adjust main container for fixed header */
@@ -73,9 +74,9 @@ header[data-testid="stHeader"] {
     max-width: 1400px; 
 }
 
-/* Position toolbar absolutely at top right, outside document flow */
+/* Position toolbar absolutely at top right, ON TOP of header */
 [data-testid="stToolbar"] {
-    position: fixed !important;
+    position: absolute !important;
     top: 0.4rem !important;
     right: 0.8rem !important;
     z-index: 999999 !important;
