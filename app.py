@@ -68,6 +68,7 @@ header[data-testid="stHeader"] {
 /* Ensure Streamlit's top-right menu buttons stay visible above our header */
 [data-testid="stToolbar"] {
     z-index: 1000001 !important;
+    position: relative !important;
 }
 
 /* Custom Fixed Header */
@@ -75,15 +76,17 @@ header[data-testid="stHeader"] {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    z-index: 999999;
+    right: 0;
+    z-index: 999998;
     background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
     padding: 0.4rem 1.2rem;
     height: 3.5rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
 }
 
 /* Decision Banners - COMPRESSED */
