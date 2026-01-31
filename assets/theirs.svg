@@ -1,0 +1,49 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- ARMS BASE (Dark Grey) -->
+  <path d="M250 250 L110 120" stroke="#5C6B79" stroke-width="28" stroke-linecap="round"/>
+  <path d="M250 250 L390 120" stroke="#5C6B79" stroke-width="28" stroke-linecap="round"/>
+  <path d="M250 250 L110 380" stroke="#5C6B79" stroke-width="28" stroke-linecap="round"/>
+  <path d="M250 250 L390 380" stroke="#5C6B79" stroke-width="28" stroke-linecap="round"/>
+
+  <!-- ARMS INSET (Light Grey) -->
+  <path d="M250 250 L115 125" stroke="#E6EAEB" stroke-width="12" stroke-linecap="round"/>
+  <path d="M250 250 L385 125" stroke="#E6EAEB" stroke-width="12" stroke-linecap="round"/>
+  <path d="M250 250 L115 375" stroke="#E6EAEB" stroke-width="12" stroke-linecap="round"/>
+  <path d="M250 250 L385 375" stroke="#E6EAEB" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- MOTOR HUBS (Concentric Circles) -->
+  <!-- Top Left -->
+  <circle cx="110" cy="120" r="35" fill="#E6EAEB" stroke="#5C6B79" stroke-width="6"/>
+  <circle cx="110" cy="120" r="18" stroke="#5C6B79" stroke-width="4"/>
+  <!-- Top Right -->
+  <circle cx="390" cy="120" r="35" fill="#E6EAEB" stroke="#5C6B79" stroke-width="6"/>
+  <circle cx="390" cy="120" r="18" stroke="#5C6B79" stroke-width="4"/>
+  <!-- Bottom Left -->
+  <circle cx="110" cy="380" r="35" fill="#E6EAEB" stroke="#5C6B79" stroke-width="6"/>
+  <circle cx="110" cy="380" r="18" stroke="#5C6B79" stroke-width="4"/>
+  <!-- Bottom Right -->
+  <circle cx="390" cy="380" r="35" fill="#E6EAEB" stroke="#5C6B79" stroke-width="6"/>
+  <circle cx="390" cy="380" r="18" stroke="#5C6B79" stroke-width="4"/>
+
+  <!-- PROPELLERS -->
+  <g id="Propellers" fill="#E6EAEB" stroke="#5C6B79" stroke-width="5">
+    <!-- Top Left Prop -->
+    <path d="M40 120 Q 40 100 110 115 Q 180 100 180 120 Q 180 140 110 125 Q 40 140 40 120 Z"/>
+    <!-- Top Right Prop -->
+    <path d="M320 120 Q 320 100 390 115 Q 460 100 460 120 Q 460 140 390 125 Q 320 140 320 120 Z"/>
+    <!-- Bottom Left Prop -->
+    <path d="M40 380 Q 40 360 110 375 Q 180 360 180 380 Q 180 400 110 385 Q 40 400 40 380 Z"/>
+    <!-- Bottom Right Prop -->
+    <path d="M320 380 Q 320 360 390 375 Q 460 360 460 380 Q 460 400 390 385 Q 320 400 320 380 Z"/>
+  </g>
+
+  <!-- MAIN BODY OVAL -->
+  <ellipse cx="250" cy="250" rx="75" ry="120" fill="white" stroke="#5C6B79" stroke-width="8"/>
+  <!-- Body Shading Line -->
+  <path d="M210 180 Q 190 250 210 320" stroke="#E6EAEB" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- MEDICAL LOGO -->
+  <circle cx="250" cy="250" r="45" fill="#38A123"/>
+  <rect x="240" y="220" width="20" height="60" rx="2" fill="white"/>
+  <rect x="220" y="240" width="60" height="20" rx="2" fill="white"/>
+</svg>

@@ -1,0 +1,56 @@
+{
+  "workbook": "Al_Ghadir_Landing_Zones.xlsx",
+  "generated_at": "2026-01-28T04:29:28.372146Z",
+  "sheets": {
+    "Al Ghadir Landing Zones": [
+      {
+        "Place Name": "Al Ghadir Park",
+        "Estimated Landing Area": "≈ 20 x 20 m",
+        "Latitude": 24.7703,
+        "Longitude": 46.6529
+      },
+      {
+        "Place Name": "Al Ghadir Open Lot (Barha)",
+        "Estimated Landing Area": "≈ 20 x 20 m",
+        "Latitude": 24.7721,
+        "Longitude": 46.6498
+      },
+      {
+        "Place Name": "Al Ghadir Sub Park",
+        "Estimated Landing Area": "≈ 15 x 15 m",
+        "Latitude": 24.7679,
+        "Longitude": 46.6561
+      },
+      {
+        "Place Name": "Al Ghadir Walkway (Open Section)",
+        "Estimated Landing Area": "≈ 15 x 15 m",
+        "Latitude": 24.7694,
+        "Longitude": 46.6545
+      },
+      {
+        "Place Name": "Primary Health Care Center Parking",
+        "Estimated Landing Area": "≈ 20 x 20 m",
+        "Latitude": 24.768,
+        "Longitude": 46.6512
+      },
+      {
+        "Place Name": "Mosque Parking Area (Candidate)",
+        "Estimated Landing Area": "≈ 15 x 15 m",
+        "Latitude": 24.7716,
+        "Longitude": 46.6538
+      },
+      {
+        "Place Name": "School Yard (Off-Peak)",
+        "Estimated Landing Area": "≈ 20 x 20 m",
+        "Latitude": 24.773,
+        "Longitude": 46.657
+      },
+      {
+        "Place Name": "Service Building Rooftop (Conditional)",
+        "Estimated Landing Area": "≈ 15 x 15 m",
+        "Latitude": 24.7709,
+        "Longitude": 46.6506
+      }
+    ]
+  }
+}

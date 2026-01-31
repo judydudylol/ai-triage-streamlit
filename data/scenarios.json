@@ -1,0 +1,47 @@
+[
+  {
+    "scenario_id": 1,
+    "location": "Al Humaid, Al Ghadir",
+    "emergency_case": "Cardiac Arrest",
+    "severity": "Critical",
+    "harm_threshold_min": 4,
+    "traffic_level_score": 0.3,
+    "time_of_day": "5:00 PM (Rush)",
+    "weather_risk_score": 0.1,
+    "voice_stress_score": 0.92,
+    "ground_time_min": 28.4,
+    "air_time_min": 3.6,
+    "ai_decision": "DOCTOR DRONE",
+    "rationale": "Ground exceeds survival limit"
+  },
+  {
+    "scenario_id": 2,
+    "location": "Al Humaid, Al Ghadir",
+    "emergency_case": "Severe Anaphylaxis",
+    "severity": "Critical",
+    "harm_threshold_min": 2,
+    "traffic_level_score": 0.5,
+    "time_of_day": "12:00 PM (Mid)",
+    "weather_risk_score": 0.2,
+    "voice_stress_score": 0.85,
+    "ground_time_min": 17.5,
+    "air_time_min": 3.6,
+    "ai_decision": "DOCTOR DRONE",
+    "rationale": "Critical window; Drone required"
+  },
+  {
+    "scenario_id": 3,
+    "location": "Al Humaid, Al Ghadir",
+    "emergency_case": "COPD Exacerbation",
+    "severity": "High",
+    "harm_threshold_min": 15,
+    "traffic_level_score": 0.9,
+    "time_of_day": "2:00 AM (Clear)",
+    "weather_risk_score": 0.02,
+    "voice_stress_score": 0.65,
+    "ground_time_min": 10.1,
+    "air_time_min": 3.6,
+    "ai_decision": "AMBULANCE",
+    "rationale": "Ground arrival safe & cost-effective"
+  }
+]

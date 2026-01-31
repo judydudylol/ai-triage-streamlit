@@ -1,0 +1,122 @@
+[
+  {
+    "case_name": "Loss of vision + confusion",
+    "severity": "High",
+    "harm_threshold_min": 30,
+    "traffic_flow_score": 0.19,
+    "weather_risk_score": 0.88,
+    "ground_eta_min": 29.8,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "Ambulance",
+    "reasoning": "High weather risk",
+    "voice_stress_score": 0.65
+  },
+  {
+    "case_name": "Cardiac Arrest",
+    "severity": "Critical",
+    "harm_threshold_min": 4,
+    "traffic_flow_score": 0.2,
+    "weather_risk_score": 0.14,
+    "ground_eta_min": 29.8,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "\ud83d\ude80 Doctor Drone",
+    "reasoning": "Time critical; Ground too slow",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Asthma attack collapse",
+    "severity": "Critical",
+    "harm_threshold_min": 4,
+    "traffic_flow_score": 0.98,
+    "weather_risk_score": 0.55,
+    "ground_eta_min": 9.4,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "Ambulance",
+    "reasoning": "High weather risk",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Post collapse unconscious",
+    "severity": "Critical",
+    "harm_threshold_min": 4,
+    "traffic_flow_score": 0.21,
+    "weather_risk_score": 0.49,
+    "ground_eta_min": 29.8,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "Ambulance",
+    "reasoning": "High weather risk",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Massive external bleeding",
+    "severity": "Critical",
+    "harm_threshold_min": 5,
+    "traffic_flow_score": 0.86,
+    "weather_risk_score": 0.02,
+    "ground_eta_min": 10.6,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "\ud83d\ude80 Doctor Drone",
+    "reasoning": "Time critical; Ground too slow",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Car accident, chest injury",
+    "severity": "Critical",
+    "harm_threshold_min": 5,
+    "traffic_flow_score": 0.56,
+    "weather_risk_score": 0.02,
+    "ground_eta_min": 15.4,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "\ud83d\ude80 Doctor Drone",
+    "reasoning": "Time critical; Ground too slow",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Cardiac Arrest",
+    "severity": "Critical",
+    "harm_threshold_min": 4,
+    "traffic_flow_score": 0.44,
+    "weather_risk_score": 0.37,
+    "ground_eta_min": 19.7,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "Ambulance",
+    "reasoning": "High weather risk",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "COPD Exacerbation",
+    "severity": "High",
+    "harm_threshold_min": 15,
+    "traffic_flow_score": 0.19,
+    "weather_risk_score": 0.06,
+    "ground_eta_min": 29.8,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "\ud83d\ude80 Doctor Drone",
+    "reasoning": "Time critical; Ground too slow",
+    "voice_stress_score": 0.65
+  },
+  {
+    "case_name": "Penetrating Trauma",
+    "severity": "Critical",
+    "harm_threshold_min": 5,
+    "traffic_flow_score": 0.56,
+    "weather_risk_score": 0.55,
+    "ground_eta_min": 15.4,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "Ambulance",
+    "reasoning": "High weather risk",
+    "voice_stress_score": 0.85
+  },
+  {
+    "case_name": "Rapid breathing",
+    "severity": "High",
+    "harm_threshold_min": 10,
+    "traffic_flow_score": 0.83,
+    "weather_risk_score": 0.07,
+    "ground_eta_min": 10.9,
+    "air_eta_min": 3.6,
+    "ai_dispatch_prediction": "\ud83d\ude80 Doctor Drone",
+    "reasoning": "Time critical; Ground too slow",
+    "voice_stress_score": 0.65
+  }
+]
