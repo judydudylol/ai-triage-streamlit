@@ -49,99 +49,141 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom Fixed Header
+# Custom Fixed Header with CSS and HTML combined
 st.markdown(
     """
 <style>
-/* Fixed header at top */
+/* Fixed header at top - HIGHEST PRIORITY */
 .custom-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3.5rem;
-    background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.2rem;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 3.5rem !important;
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 1.2rem !important;
 }
 
 /* Left side - Branding */
 .header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
 }
 
 .header-brand {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: -0.5px;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    letter-spacing: -0.5px !important;
 }
 
 .header-divider {
-    height: 16px;
-    width: 1px;
-    background: rgba(255,255,255,0.2);
+    height: 16px !important;
+    width: 1px !important;
+    background: rgba(255,255,255,0.2) !important;
 }
 
 .header-title {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.8);
-    font-weight: 400;
+    font-size: 0.85rem !important;
+    color: rgba(255,255,255,0.8) !important;
+    font-weight: 400 !important;
 }
 
 .header-badge {
-    font-size: 0.75rem;
-    color: #10b981;
-    font-weight: 600;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 0.75rem !important;
+    color: #10b981 !important;
+    font-weight: 600 !important;
+    background: rgba(16, 185, 129, 0.1) !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(16, 185, 129, 0.2) !important;
 }
 
 .header-arabic {
-    font-size: 1rem;
-    font-weight: 700;
-    color: white;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: white !important;
 }
 
 /* Right side - Icons */
 .header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
 }
 
 .header-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: rgba(255,255,255,0.8);
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
-    border-radius: 6px;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 1.2rem !important;
+    transition: all 0.2s ease !important;
+    border-radius: 6px !important;
+    background: transparent !important;
 }
 
 .header-icon:hover {
-    color: white;
-    background: rgba(255,255,255,0.1);
+    color: white !important;
+    background: rgba(255,255,255,0.1) !important;
+}
+
+.header-icon a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Adjust main container to account for fixed header */
 .block-container { 
     padding-top: 4.5rem !important; 
-    max-width: 1400px; 
+    max-width: 1400px !important;
 }
+</style>
+
+<div class="custom-header">
+    <div class="header-left">
+        <div class="header-brand">SAHM</div>
+        <div class="header-divider"></div>
+        <div class="header-title">Smart Aerial Human-Medic</div>
+        <div class="header-badge">LIVE SYSTEM</div>
+        <div class="header-arabic">سهم</div>
+    </div>
+    <div class="header-right">
+        <a href="https://github.com/judydudylol/ai-triage-streamlit" target="_blank" class="header-icon" title="GitHub Repository">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+        </a>
+        <div class="header-icon" title="User Profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
+        <div class="header-icon" title="Settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24"></path>
+            </svg>
+        </div>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
 
 /* Decision Banners - COMPRESSED */
 .decision-banner {
@@ -805,13 +847,7 @@ hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 24px 
   font-size: 0.8em;
 }
 </style>
-""",
-    unsafe_allow_html=True,
-)
 
-# Render fixed header with branding and icons
-st.markdown(
-    """
 <div class="custom-header">
     <div class="header-left">
         <div class="header-brand">SAHM</div>
