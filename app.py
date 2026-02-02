@@ -59,22 +59,31 @@ header[data-testid="stHeader"] {
     height: 3.5rem !important;
 }
 
-/* Simple, clean header styling */
-header[data-testid="stHeader"] {
-    background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
-    padding: 0.4rem 1.2rem !important;
-    height: 3.5rem !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
+/* Adjust main container for fixed header */
+.block-container { 
+    padding-top: 4.5rem !important; 
+    max-width: 1400px; 
 }
 
-/* Adjust main container */
-.block-container { 
-    padding-top: 3.5rem !important; 
-    max-width: 1400px; 
+/* Ensure Streamlit's top-right menu buttons stay visible above our header */
+[data-testid="stToolbar"] {
+    z-index: 1000001 !important;
+}
+
+/* Custom Fixed Header */
+.fixed-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+    background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+    padding: 0.4rem 1.2rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Decision Banners - COMPRESSED */
@@ -453,65 +462,20 @@ def get_mission_profile(category: str, severity: int) -> Dict[str, Any]:
 def render_header():
     st.markdown(
         """
-<style>
-.branding-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3.5rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 1.2rem;
-    z-index: 999999;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-}
-
-.branding-brand {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: -0.5px;
-}
-
-.branding-divider {
-    height: 16px;
-    width: 1px;
-    background: rgba(255,255,255,0.2);
-}
-
-.branding-title {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.8);
-    font-weight: 400;
-}
-
-.branding-badge {
-    font-size: 0.75rem;
-    color: #10b981;
-    font-weight: 600;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.branding-arabic {
-    font-size: 1rem;
-    font-weight: 700;
-    color: white;
-}
-</style>
-<div class="branding-container">
-  <div class="branding-brand">SAHM</div>
-  <div class="branding-divider"></div>
-  <div class="branding-title">Smart Aerial Human-Medic</div>
-  <div class="branding-badge">LIVE SYSTEM</div>
-  <div class="branding-arabic">سهم</div>
+<div class="fixed-toolbar">
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 1.1rem; font-weight: 700; color: white; letter-spacing: -0.5px;">SAHM</div>
+      <div style="height: 16px; width: 1px; background: rgba(255,255,255,0.2);"></div>
+      <div style="font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 400;">
+        Smart Aerial Human-Medic <span style="opacity: 0.5; margin: 0 4px;">|</span> Al Ghadir Dispatch Center
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 2px 8px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">LIVE SYSTEM</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: white;">سهم</div>
+    </div>
+  </div>
 </div>
 """,
         unsafe_allow_html=True,
@@ -1355,7 +1319,7 @@ def render_triage_tab(data: Dict[str, Any]):
                         env_context={"weather": weather, "ground_eta": ground, "air_eta": air}
                     )
                     
-                    if ai_result and ai_result.get("success") is not False:
+                    if ai_result:
                         st.session_state.ai_transcription = ai_result.get("transcription", "")
                         st.session_state.ai_symptoms = ai_result.get("symptoms", [])
                         st.session_state.ai_stress = float(ai_result.get("voiceStressScore", 0.5))
@@ -1371,8 +1335,6 @@ def render_triage_tab(data: Dict[str, Any]):
                         
                         st.success(f"AI Analysis Complete: {ai_result.get('callerIntent', 'Emergency analyzed')}")
                         st.rerun()
-                    elif ai_result and ai_result.get("error"):
-                        st.error(f"❌ AI Analysis Error:\n\n{ai_result.get('error')}\n\nPlease try again or enter symptoms manually.")
                     else:
                         st.error("AI analysis failed. Please try again or enter symptoms manually.")
         
