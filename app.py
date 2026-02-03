@@ -509,72 +509,99 @@ def render_rule_checklist(result: DispatchResult):
     rule1_class = "pass" if weather_pass else "fail"
     rule1_text = f"Weather safe ({result.weather_risk_pct:.0f}% ≤ 35%)" if weather_pass else f"Weather unsafe ({result.weather_risk_pct:.0f}% > 35%)"
     
-    # Rule 2: Harm threshold
-    harm_trigger = result.exceeds_harm
-    rule2_icon = "!" if harm_trigger else "✓"
-    rule2_class = "trigger" if harm_trigger else "pass"
-    rule2_text = f"Ground ETA ({result.ground_eta_min:.1f} min) {'>' if harm_trigger else '≤'} Harm limit ({result.harm_threshold_min:.1f} min)"
-    
-    # Rule 3: Efficiency
-    efficiency_trigger = result.exceeds_efficiency
-    rule3_icon = "⚡" if efficiency_trigger else "○"
-    rule3_class = "trigger" if efficiency_trigger else "pass"
-    rule3_text = f"Time saved ({result.time_delta_min:.1f} min) {'>' if efficiency_trigger else '≤'} 10 min threshold"
-    
-    st.markdown("### Decision Logic Evaluation")
-    
     st.markdown(
-        f"""
-<div class="rule-item {rule1_class}">
-  <span class="rule-icon">{rule1_icon}</span>
-  <div>
-    <strong>Rule 1: Safety Filter</strong><br/>
-    <span class="muted">{rule1_text}</span>
-  </div>
-</div>
+      """
+  <style>
+  /* Hide Streamlit's default top bar */
+  header[data-testid="stHeader"] { display: none !important; }
 
-<div class="rule-item {rule2_class}">
-  <span class="rule-icon">{rule2_icon}</span>
-  <div>
-    <strong>Rule 2: Emergency Override</strong><br/>
-    <span class="muted">{rule2_text}</span>
+  .sahm-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    z-index: 999999;
+    background: rgba(14, 17, 23, 0.90);
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    padding: 0 36px 0 36px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .sahm-hamburger {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 22px;
+    border-radius: 8px;
+    transition: box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .sahm-hamburger:hover {
+    background: rgba(16,185,129,0.10);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.18);
+  }
+  .sahm-brand {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #fff;
+    margin-right: 28px;
+    letter-spacing: 0.01em;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .sahm-badge {
+    background: linear-gradient(90deg, #10b981 60%, #059669 100%);
+    color: #fff;
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin-right: 28px;
+    box-shadow: 0 2px 8px 0 rgba(16,185,129,0.10);
+    border: none;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    height: 38px;
+  }
+  .sahm-arabic {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    margin-left: auto;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .main .block-container { padding-top: 84px !important; }
+  </style>
+  <div class="sahm-header">
+    <span class="sahm-hamburger" title="Menu">
+    <svg width="28" height="28" viewBox="0 0 28 28">
+      <rect y="6" width="28" height="3" rx="1.5" fill="#fff"/>
+      <rect y="13" width="28" height="3" rx="1.5" fill="#fff"/>
+      <rect y="20" width="28" height="3" rx="1.5" fill="#fff"/>
+    </svg>
+    </span>
+    <span class="sahm-brand">SAHM | Smart Aerial Human-Medic</span>
+    <span class="sahm-badge">LIVE SYSTEM</span>
+    <span class="sahm-arabic">سهم</span>
   </div>
-</div>
-
-<div class="rule-item {rule3_class}">
-  <span class="rule-icon">{rule3_icon}</span>
-  <div>
-    <strong>Rule 3: Efficiency Optimization</strong><br/>
-    <span class="muted">{rule3_text}</span>
-  </div>
-</div>
-""",
-        unsafe_allow_html=True,
+  """,
+      unsafe_allow_html=True,
     )
-
-def render_decision_banner(result: DispatchResult):
-    """Main decision display - COMPRESSED"""
-    
-    if result.response_mode == "BOTH":
-        st.markdown(
-            f"""
-<div class="decision-banner both">
-  <h1>SIMULTANEOUS RESPONSE</h1>
-  <p>CRITICAL: Drone (Immediate Aid) + Ambulance (Transport)</p>
-  <div style="margin-top: 10px;">
-    <span class="badge badge-success">{result.rule_triggered}</span>
-    <span class="badge badge-success" style="margin-left: 8px;">Confidence: {result.confidence*100:.0f}%</span>
-  </div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
-        # Drone Payload display (for BOTH)
-        case_name = getattr(result, 'case_name', None) or getattr(result, 'emergency_case', None) or ''
-        tools = MEDIC_TOOLS.get(case_name, MEDIC_TOOLS.get('General'))
-        st.markdown('#### 📦 Drone Payload')
-        for tool in tools:
-            st.success(tool)
     elif result.response_mode == "DOCTOR_DRONE":
         st.markdown(
             f"""
