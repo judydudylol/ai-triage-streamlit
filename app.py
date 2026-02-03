@@ -1,3 +1,17 @@
+# =============================================================================
+# Medic Tools Mapping
+# =============================================================================
+
+MEDIC_TOOLS = {
+  'Cardiac Arrest': ['AED', 'Cardiac Medications', 'Portable ECG', 'Advanced Airway Kit'],
+  'Severe Trauma': ['Tourniquet', 'Hemostatic Gauze', 'IV Fluids', 'Splint Kit', 'Pressure Dressings'],
+  'Burn': ['Burn Gel', 'Sterile Dressings', 'IV Fluids', 'Pain Relief'],
+  'Respiratory Distress': ['Portable Oxygen', 'Nebulizer', 'Bronchodilators', 'Intubation Kit'],
+  'Anaphylaxis': ['EpiPen', 'Antihistamines', 'Oxygen', 'IV Steroids'],
+  'Stroke': ['Stroke Assessment Kit', 'Neuroprotective Meds', 'Oxygen', 'Glucose Monitor'],
+  'General': ['ALS Kit', 'Vital Signs Monitor', 'First Aid Trauma Bag', 'IV Access Kit'],
+}
+
 """
 SAHM Emergency Response System
 FINAL IMPROVED VERSION
@@ -604,6 +618,12 @@ def render_decision_banner(result: DispatchResult):
 """,
             unsafe_allow_html=True,
         )
+        # Drone Payload display (for BOTH)
+        case_name = getattr(result, 'case_name', None) or getattr(result, 'emergency_case', None) or ''
+        tools = MEDIC_TOOLS.get(case_name, MEDIC_TOOLS.get('General'))
+        st.markdown('#### 📦 Drone Payload')
+        for tool in tools:
+            st.success(tool)
     elif result.response_mode == "DOCTOR_DRONE":
         st.markdown(
             f"""
@@ -618,6 +638,12 @@ def render_decision_banner(result: DispatchResult):
 """,
             unsafe_allow_html=True,
         )
+        # Drone Payload display (for Drone)
+        case_name = getattr(result, 'case_name', None) or getattr(result, 'emergency_case', None) or ''
+        tools = MEDIC_TOOLS.get(case_name, MEDIC_TOOLS.get('General'))
+        st.markdown('#### 📦 Drone Payload')
+        for tool in tools:
+            st.success(tool)
     else:  # AMBULANCE
         st.markdown(
             f"""
@@ -1351,21 +1377,36 @@ def render_triage_tab(data: Dict[str, Any]):
             st.warning(f"{get_availability_message()}")
             st.caption("Manual input mode - AI analysis disabled")
         
-        audio_val = st.audio_input("Record Emergency Call", key="triage_audio")
-        if audio_val:
-          if is_gemini_available():
-            # Fix: Prevent infinite loop by checking if this audio was already processed
-            audio_bytes = audio_val.read()
-            # Create a simple hash of the bytes to identify changes
-            import hashlib
+        audio_recorder_value = st.audio_input("Record Emergency Call", key="triage_audio")
+        file_uploader_value = st.file_uploader("Or upload an audio file (.wav, .mp3)", type=["wav", "mp3"], key="triage_audio_upload")
+
+        audio_bytes = None
+        mime_type = None
+        audio_hash = None
+        import hashlib
+
+        if audio_recorder_value:
+          try:
+            audio_bytes = audio_recorder_value.read()
+            mime_type = "audio/wav"
             audio_hash = hashlib.md5(audio_bytes).hexdigest()
-            # Retrieve last processed hash
+          except Exception as e:
+            st.error(f"Audio recording error: {e}")
+        elif file_uploader_value:
+          try:
+            audio_bytes = file_uploader_value.read()
+            mime_type = file_uploader_value.type or "audio/wav"
+            audio_hash = hashlib.md5(audio_bytes).hexdigest()
+          except Exception as e:
+            st.error(f"File upload error: {e}")
+
+        if audio_bytes and is_gemini_available():
+          try:
             last_hash = st.session_state.get("last_processed_audio_id")
             if audio_hash != last_hash:
               with st.spinner("Analyzing Audio..."):
-                mime_type = "audio/wav"
                 ai_result = analyze_audio_call(
-                  audio_bytes, 
+                  audio_bytes,
                   mime_type,
                   env_context={"weather": weather, "ground_eta": ground, "air_eta": air}
                 )
@@ -1379,12 +1420,13 @@ def render_triage_tab(data: Dict[str, Any]):
                   st.session_state.ai_medical_summary = ai_result.get("medicalSummary", "")
                   st.session_state.ai_duration = int(ai_result.get("symptomDurationMinutes", 10))
                   st.session_state.ai_stress_indicators = ai_result.get("voiceStressIndicators", "")
-                  # Mark as processed
                   st.session_state.last_processed_audio_id = audio_hash
                   st.success(f"AI Analysis Complete: {ai_result.get('callerIntent', 'Emergency analyzed')}")
                   st.rerun()
                 else:
                   st.error("AI analysis failed. Please try again or enter symptoms manually.")
+          except Exception as e:
+            st.error(f"Audio processing error: {e}")
         
         if st.session_state.ai_transcription:
             st.markdown(
