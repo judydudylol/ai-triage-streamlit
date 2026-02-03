@@ -1476,18 +1476,9 @@ def main():
       st.info("Ensure these files exist in /Files directory")
       st.stop()
 
-    # Sidebar
+    # Sidebar (no navigation)
     with st.sidebar:
       st.markdown("### System Control")
-      # Sync sidebar radio with top menu
-      view_mode = st.radio(
-        "View Mode",
-        ["AI Triage", "Live Command Center", "Scenarios", "Test Cases", "Data Explorer"],
-        index=["AI Triage", "Live Command Center", "Scenarios", "Test Cases", "Data Explorer"].index(st.session_state['view_mode']),
-        label_visibility="collapsed"
-      )
-      st.session_state['view_mode'] = view_mode
-
       st.markdown("---")
       st.caption("**System Status**")
       st.markdown(f"Medical Protocols: {len(data['categorizer'])}")
