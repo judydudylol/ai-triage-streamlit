@@ -12,17 +12,6 @@ MEDIC_TOOLS = {
   'General': ['ALS Kit', 'Vital Signs Monitor', 'First Aid Trauma Bag', 'IV Access Kit'],
 }
 
-"""
-SAHM Emergency Response System
-FINAL IMPROVED VERSION
-
-UI Improvements:
-- Decision Engine at top center (conditional display)
-- Removed unnecessary tabs and emojis
-- Wider map at bottom
-- Fixed HTML rendering
-- Cleaner layout
-"""
 
 import json
 import re
@@ -478,76 +467,38 @@ def render_header():
       """
   <style>
     .main .block-container { padding-top: 80px !important; }
-    .sahm-menu {
-      display: flex;
-      gap: 28px;
-      margin-left: 32px;
-    }
-    .sahm-menu-item {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 500;
-      text-decoration: none;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-      cursor: pointer;
-    }
-    .sahm-menu-item:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
+    .sahm-header-flex { display: flex; align-items: center; width: 100vw; height: 60px; background: #0e1117; position: fixed; top: 0; left: 0; z-index: 999999; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0 20px; box-sizing: border-box; }
+    .sahm-brand { font-size: 1.1rem; font-weight: 700; color: white; margin-right: 32px; }
+    .sahm-menu-btn { background: none; border: none; color: #fff; font-size: 1rem; font-weight: 500; margin-right: 24px; opacity: 0.85; cursor: pointer; transition: opacity 0.2s; padding: 4px 8px; border-radius: 4px; }
+    .sahm-menu-btn.selected, .sahm-menu-btn:hover { opacity: 1; background: rgba(16,185,129,0.12); }
+    .sahm-badge { background-color: #10b981; color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; margin-left: 32px; }
+    .sahm-arabic { font-size: 1.2rem; font-weight: 700; color: white; margin-left: auto; }
   </style>
-
-  <div style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 60px;
-    z-index: 999999;
-    background-color: #0e1117;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    box-sizing: border-box;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  ">
-    <div style="display: flex; align-items: center; gap: 16px; width: 100%;">
-      <span style="font-size: 1.1rem; font-weight: 700; color: white;">SAHM | Smart Aerial Human-Medic</span>
-      <nav class="sahm-menu">
-        <span class="sahm-menu-item">Home</span>
-        <span class="sahm-menu-item">AI Triage</span>
-        <span class="sahm-menu-item">Live Command</span>
-        <span class="sahm-menu-item">Scenarios</span>
-        <span class="sahm-menu-item">Test Cases</span>
-        <span class="sahm-menu-item">Data Explorer</span>
-      </nav>
-      <span style="
-        background-color: #10b981;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
-        margin-left: 32px;
-      ">
-        LIVE SYSTEM
-      </span>
-      <span style="
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: white;
-        margin-left: auto;
-      ">
-        سهم
-      </span>
-    </div>
-  </div>
   """,
       unsafe_allow_html=True,
     )
+    menu_items = [
+      ("AI Triage", "AI Triage"),
+      ("Live Command", "Live Command Center"),
+      ("Scenarios", "Scenarios"),
+      ("Test Cases", "Test Cases"),
+      ("Data Explorer", "Data Explorer"),
+    ]
+    if 'view_mode' not in st.session_state:
+      st.session_state['view_mode'] = "AI Triage"
+    cols = st.columns([2, 1, 1, 1, 1, 1, 2])
+    with cols[0]:
+      st.markdown('<span class="sahm-brand">SAHM | Smart Aerial Human-Medic</span>', unsafe_allow_html=True)
+    for i, (label, mode) in enumerate(menu_items):
+      with cols[i+1]:
+        if st.button(label, key=f"menu_{mode}", help=mode, use_container_width=True):
+          st.session_state['view_mode'] = mode
+        # Highlight selected
+        if st.session_state['view_mode'] == mode:
+          st.markdown(f'<style>div[data-testid="column"][data-testid="stVerticalBlock"] button#{'menu_'+mode.replace(' ','_')} {{ background: rgba(16,185,129,0.12); }}</style>', unsafe_allow_html=True)
+    with cols[-1]:
+      st.markdown('<span class="sahm-badge">LIVE SYSTEM</span>', unsafe_allow_html=True)
+      st.markdown('<span class="sahm-arabic">سهم</span>', unsafe_allow_html=True)
 
 def render_rule_checklist(result: DispatchResult):
     """Visual rule evaluation"""
@@ -1518,59 +1469,56 @@ def render_data_explorer(data: Dict[str, Any]):
 
 def main():
     render_header()
-    
+
     data, error = load_all_data()
     if error:
-        st.error(f"Data Loading Error: {error}")
-        st.info("Ensure these files exist in /Files directory")
-        st.stop()
-    
+      st.error(f"Data Loading Error: {error}")
+      st.info("Ensure these files exist in /Files directory")
+      st.stop()
+
     # Sidebar
     with st.sidebar:
-        st.markdown("### System Control")
-        
-        view_mode = st.radio(
-            "View Mode",
-            ["AI Triage", "Live Command Center", "Scenarios", "Test Cases", "Data Explorer"],
-            label_visibility="collapsed"
-        )
-        
-        st.markdown("---")
-        
-        st.caption("**System Status**")
-        st.markdown(f"Medical Protocols: {len(data['categorizer'])}")
-        st.markdown(f"Landing Zones: {len(data['landing_zones'])}")
-        st.markdown(f"Coverage: Al Ghadir, Riyadh")
-        
-        st.markdown("---")
-        
-        with st.expander("Validation"):
-            if st.button("Run Validation", use_container_width=True):
-                with st.spinner("Validating..."):
-                    s_rep = validate_scenarios()
-                    c_rep = validate_cases()
-                    total = s_rep.total + c_rep.total
-                    matches = s_rep.matches + c_rep.matches
-                    accuracy = (matches / total * 100) if total > 0 else 0
-                    
-                    st.success(f"Scenarios: {s_rep.matches}/{s_rep.total}")
-                    st.success(f"Cases: {c_rep.matches}/{c_rep.total}")
-                    st.metric("Accuracy", f"{accuracy:.1f}%")
-        
-        st.markdown("---")
-        st.caption("Prototype System | Rule-based decision engine")
-    
+      st.markdown("### System Control")
+      # Sync sidebar radio with top menu
+      view_mode = st.radio(
+        "View Mode",
+        ["AI Triage", "Live Command Center", "Scenarios", "Test Cases", "Data Explorer"],
+        index=["AI Triage", "Live Command Center", "Scenarios", "Test Cases", "Data Explorer"].index(st.session_state['view_mode']),
+        label_visibility="collapsed"
+      )
+      st.session_state['view_mode'] = view_mode
+
+      st.markdown("---")
+      st.caption("**System Status**")
+      st.markdown(f"Medical Protocols: {len(data['categorizer'])}")
+      st.markdown(f"Landing Zones: {len(data['landing_zones'])}")
+      st.markdown(f"Coverage: Al Ghadir, Riyadh")
+      st.markdown("---")
+      with st.expander("Validation"):
+        if st.button("Run Validation", use_container_width=True):
+          with st.spinner("Validating..."):
+            s_rep = validate_scenarios()
+            c_rep = validate_cases()
+            total = s_rep.total + c_rep.total
+            matches = s_rep.matches + c_rep.matches
+            accuracy = (matches / total * 100) if total > 0 else 0
+            st.success(f"Scenarios: {s_rep.matches}/{s_rep.total}")
+            st.success(f"Cases: {c_rep.matches}/{c_rep.total}")
+            st.metric("Accuracy", f"{accuracy:.1f}%")
+      st.markdown("---")
+      st.caption("Prototype System | Rule-based decision engine")
+
     # Main content
-    if view_mode == "Live Command Center":
-        render_live_command(data)
-    elif view_mode == "Scenarios":
-        render_scenarios_tab(data)
-    elif view_mode == "Test Cases":
-        render_test_cases_tab(data)
-    elif view_mode == "AI Triage":
-        render_triage_tab(data)
-    elif view_mode == "Data Explorer":
-        render_data_explorer(data)
+    if st.session_state['view_mode'] == "Live Command Center":
+      render_live_command(data)
+    elif st.session_state['view_mode'] == "Scenarios":
+      render_scenarios_tab(data)
+    elif st.session_state['view_mode'] == "Test Cases":
+      render_test_cases_tab(data)
+    elif st.session_state['view_mode'] == "AI Triage":
+      render_triage_tab(data)
+    elif st.session_state['view_mode'] == "Data Explorer":
+      render_data_explorer(data)
 
 
 if __name__ == "__main__":
