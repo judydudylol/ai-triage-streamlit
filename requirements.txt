@@ -2,3 +2,7 @@ streamlit>=1.30
 pandas
 google-genai>=1.0.0
 python-dotenv>=1.0.0
+streamlit-folium
+streamlit-extras
+streamlit-timeline
+pytest>=8.0.0
